@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Speech Prototype</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e6f7f5; /* Light bluish-green */
+        }
+        .recording-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .recording-btn.recording {
+            width: 100px;
+            height: 100px;
+            background-color: #33b5ad; /* Bluish-green accent */
+            color: white;
+        }
+        .copy-box {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="mb-4" style="color: #007d76;">Text-to-Speech Prototype</h1>
+        <button id="recordBtn" class="btn btn-outline-primary recording-btn">
+            <span id="recordText">Record</span>
+        </button>
+        <div id="copyBox" class="copy-box p-3 border rounded">
+            <p id="loremText" class="mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <button id="copyBtn" class="btn btn-sm btn-secondary">Copy Text</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const recordBtn = document.getElementById('recordBtn');
+        const recordText = document.getElementById('recordText');
+        const copyBox = document.getElementById('copyBox');
+        const loremText = document.getElementById('loremText');
+        const copyBtn = document.getElementById('copyBtn');
+
+        let isRecording = false;
+
+        recordBtn.addEventListener('click', () => {
+            isRecording = !isRecording;
+            if (isRecording) {
+                recordBtn.classList.add('recording');
+                recordText.textContent = 'Stop';
+                copyBox.style.display = 'none';
+            } else {
+                recordBtn.classList.remove('recording');
+                recordText.textContent = 'Record';
+                copyBox.style.display = 'block';
+            }
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(loremText.textContent).then(() => {
+                alert('Text copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>
